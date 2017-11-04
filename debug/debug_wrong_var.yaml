@@ -1,0 +1,11 @@
+---
+- hosts: pi-a
+  strategy: debug
+  remote_user: pi
+  become: yes
+  gather_facts: False
+  vars:
+    var1: value1
+  tasks:
+  - name: wrong variable
+    ping: data={{ wrong_var }}

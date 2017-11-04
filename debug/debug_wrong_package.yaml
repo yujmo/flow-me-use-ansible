@@ -1,0 +1,11 @@
+---
+- hosts: pi-a
+  strategy: debug
+  remote_user: pi
+  become: yes
+  gather_facts: True
+  vars:
+    pkg_name: not_exist
+  tasks:
+  - name: install package
+    apt: name={{ pkg_name }}
