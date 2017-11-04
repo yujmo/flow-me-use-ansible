@@ -1,0 +1,11 @@
+---
+- hosts: pis_get_datas
+  serial: "50%"
+  remote_user: pi
+  become: yes
+  gather_facts: True
+  tasks:
+  - name: "ensure mariadb-server is at the latest version"
+    apt:
+      name: mariadb-server
+      state: present

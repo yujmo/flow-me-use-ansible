@@ -1,0 +1,5 @@
+---
+- hosts: pis_get_datas
+  tasks:
+  - name: "test delegate"
+    local_action: command  touch /root/test{{ inventory_hostname }}
