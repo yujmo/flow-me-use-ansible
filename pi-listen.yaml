@@ -1,0 +1,45 @@
+---
+- hosts: pis_get_datas
+  remote_user: pi
+  become: yes
+  become_method: sudo
+  order: sorted
+  gather_facts: True
+  tasks:
+  - name: copy py program to remote machines
+    copy:
+      src: /etc/ansible/pi/mo.py
+      dest: /home/pi/xx.py
+      mode: 0644
+      force: yes
+  - name: excute the command that get datas
+    shell: python /home/pi/xx.py >> /home/pi/xx_cache
+  - name: fetch files
+    fetch: 
+      src: /home/pi/xx.py
+      dest: /etc/ansible/pi/{{ ansible_hostname }}
+
+- hosts: all
+  tasks:
+  - name: "ensure Nginx is at the latest version"
+    apt:
+      name: nginx
+      state: present
+  - name: run this command and ignore the result
+    shell: /usr/bin/testcommand
+    ignore_errors: True
+  - name: run some commnd 
+    shell: echo "hello wolrd"
+    notify: "restart two services"
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+      become: yes
+      become_method: sudo
+      listen: "restart two services"
+    - name: restart mariadb-server
+      service: name=mariadb state=restarted
+      become: yes
+      become_method: sudo
+      listen: "restart two services"
+
