@@ -1,9 +1,0 @@
----
-- hosts: pis_get_datas
-  vars_prompt:
-    - name: "name"
-      prompt: "version"
-      default: "emacs"
-  tasks:
-    - name: install some files
-      apt: name=emacs
