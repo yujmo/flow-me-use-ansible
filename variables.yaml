@@ -3,9 +3,18 @@
   order: sorted
   gather_facts: True
   tasks:
-  - name: touch some files
+  - name: 1. touch some files
     file: 
       path: "/tmp/{{ ansible_os_family }}"
       state: touch
       mode: 0644
-  
+  - name: 2. touch some files
+    file:
+      path: "/tmp/{{ groups['test'] }}"
+      state: touch
+      mode: 0644
+  - name: 3. touch some files
+    file:
+      path: "/tmp/{{ ansible_play_hosts }}"
+      state: touch
+      mode: 0644
