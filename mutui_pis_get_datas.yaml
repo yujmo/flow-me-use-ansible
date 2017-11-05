@@ -1,0 +1,26 @@
+---
+- hosts: all
+  remote_user: pi
+  become: yes
+  gather_facts: False
+  tasks:
+  - name: copy py program to the remote machines
+    copy:
+      src: /home/pi/xx.py
+      dest: xx.py
+      mode: 0644
+      force: yes
+  - name: execute the command
+    shell: python /home/pi/xx.py
+  - name: fetch the results
+    fetch:
+      src: pi1.txt
+      dest: /home/pi/results
+  - name: fetch the results
+    fetch:
+      src: pi2.txt
+      dest: /home/pi/results
+  - name: fetch the results
+    fetch:
+      src: pi3.txt
+      dest: /home/pi/results
