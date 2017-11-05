@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+  - name: copy py program to the remote machines
+    template:
+      src: /etc/ansible/pi/xx.py.j2
+      dest: /root/xx.py
+      force: yes
+  - name: execute the command
+    shell: python /root/xx.py
+    async: 50
+    poll: 5

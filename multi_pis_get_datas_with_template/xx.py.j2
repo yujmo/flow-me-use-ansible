@@ -1,0 +1,7 @@
+import time
+with open('/root/1{{ ansible_host }}.txt','w') as f1:
+	f1.write("this is {{ ansible_host }}.txt")
+with open('/root/2{{ ansible_host }}.txt','w') as f2:
+	f2.write("this is {{ ansible_host }}.txt")
+with open('/root/3{{ ansible_host }}.txt','w') as f3:
+	f3.write("this is {{ ansible_host }}.txt")
