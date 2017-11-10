@@ -1,0 +1,124 @@
+---
+- hosts: teleport-master
+  gather_facts: True
+  remote_user: root
+  tasks:
+  - name: wget the teleport's file
+    get_url:
+      url: https://github.com/gravitational/teleport/releases/download/v2.3.5/teleport-v2.3.5-linux-amd64-bin.tar.gz
+      dest: /root/teleport-v2.3.5-linux-amd64-bin.tar.gz
+  - name: create a directory for teleport
+    file: 
+      path: /root/teleport
+      state: directory
+      mode: 0755
+  - name: unarchive teleport-v2.3.5-linux-amd64-bin.tar.gz
+    unarchive: 
+      src:  /root/teleport-v2.3.5-linux-amd64-bin.tar.gz
+      dest: /root/teleport/
+      remote_src: yes
+  - name: copy the bin files - tctl
+    copy:
+      src: /root/teleport/teleport/tctl
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+  - name: copy the bin files - tsh
+    copy:
+      src: /root/teleport/teleport/tsh
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+  - name: copy the bin files - tctl
+    copy:
+      src: /root/teleport/teleport/teleport
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+  - name: create a directory for /etc/teleport
+    file: 
+      path: /etc/teleport
+      state: directory
+      mode: 0755
+  - name: create a directory for /data/teleport
+    file: 
+      path: /data/teleport
+      state: directory
+      mode: 0755
+  - name: copy the service file 
+    copy:
+      src: teleport.service
+      dest: /etc/systemd/system/
+      mode: 0755
+  - name: copy the service file 
+    copy:
+      src: teleport.conf
+      dest: /etc/teleport/teleport.yaml
+      mode: 0755
+  - name: start the teleport
+    systemd:
+      name: teleport
+      state: started
+
+---
+- hosts: teleport-client
+  gather_facts: True
+  remote_user: root
+  tasks:
+  - name: wget the teleport's file
+    get_url:
+      url: https://github.com/gravitational/teleport/releases/download/v2.3.5/teleport-v2.3.5-linux-amd64-bin.tar.gz
+      dest: /root/teleport-v2.3.5-linux-amd64-bin.tar.gz
+  - name: create a directory for teleport
+    file: 
+      path: /root/teleport
+      state: directory
+      mode: 0755
+  - name: unarchive teleport-v2.3.5-linux-amd64-bin.tar.gz
+    unarchive: 
+      src:  /root/teleport-v2.3.5-linux-amd64-bin.tar.gz
+      dest: /root/teleport/
+      remote_src: yes
+  - name: copy the bin files - tctl
+    copy:
+      src: /root/teleport/teleport/tctl
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+  - name: copy the bin files - tsh
+    copy:
+      src: /root/teleport/teleport/tsh
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+  - name: copy the bin files - tctl
+    copy:
+      src: /root/teleport/teleport/teleport
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+  - name: create a directory for /etc/teleport
+    file: 
+      path: /etc/teleport
+      state: directory
+      mode: 0755
+  - name: create a directory for /data/teleport
+    file: 
+      path: /data/teleport
+      state: directory
+      mode: 0755
+  - name: copy the service file 
+    copy:
+      src: teleport.service
+      dest: /etc/systemd/system/
+      mode: 0755
+  - name: copy the service file 
+    copy:
+      src: teleport.conf
+      dest: /etc/teleport/teleport.yaml
+      mode: 0755
+  - name: start the teleport
+    systemd:
+      name: teleport
+      state: started
+
