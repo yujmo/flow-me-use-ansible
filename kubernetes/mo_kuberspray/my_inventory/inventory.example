@@ -1,0 +1,27 @@
+node1 ansible_ssh_host=95.54.0.12
+node2 ansible_ssh_host=95.54.0.13 
+node3 ansible_ssh_host=95.54.0.14
+node4 ansible_ssh_host=95.54.0.15 
+node5 ansible_ssh_host=95.54.0.16  
+node6 ansible_ssh_host=95.54.0.17  
+
+[kube-master]
+node1
+node2
+
+[etcd]
+node14
+node15
+node16
+
+[kube-node]
+node3
+node4
+node5
+node6
+node7
+node8
+
+[k8s-cluster:children]
+kube-node
+kube-master

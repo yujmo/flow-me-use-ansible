@@ -1,0 +1,10 @@
+---
+- hosts: [kubernetes]
+  gather_facts: True
+  tasks:
+  - name: etcd1
+    docker:
+      name: test
+      image: busybox
+      state: present
+
